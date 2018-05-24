@@ -1,95 +1,95 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Standard Meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+  <!-- Site Properties -->
+  <title>Crypto Currency - Home</title>
+  <link rel="stylesheet" type="text/css" href="/css/semantic.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="/js/semantic.min.js"></script>
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+  <script>
+    $(document).ready(function(){
+        $('.ui.dropdown').dropdown({maxSelections:10});
+    });
+  </script>
 
-            .full-height {
-                height: 100vh;
-            }
+</head>
+<body>
+<br>
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
+<div class="ui container">
+  <h2 class="ui header">Top crypto currencies converted to MXN</h2>
+    <div class="ui five column grid">
+        @foreach($top->Data as $t)
+        <div class="column">
+            <div class="ui card">
+                <div class="image">
+                    <img src="https://www.cryptocompare.com{{$t->CoinInfo->ImageUrl}}">
                 </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
+                <div class="content">
+                    <span class="header">{{$t->CoinInfo->FullName}}</span>
+                    <div class="meta">
+                        <span class="date">{{$t->CoinInfo->Internal}}</span>
+                    </div>
                 </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                <div class="extra content">
+                    <a href="https://www.cryptocompare.com{{$t->CoinInfo->Url}}"><i class="chart line icon"></i>Total Volume 24H {{$t->ConversionInfo->TotalVolume24H}} </a>
+                    <br><hr><p>Algorithm: {{$t->CoinInfo->Algorithm}}</p>
+                    <p>Block Number: {{$t->CoinInfo->BlockNumber}}</p>
+                    <p>BlockReward: {{$t->CoinInfo->BlockReward}}</p>
                 </div>
             </div>
         </div>
-    </body>
+        @endforeach
+    </div>
+</div>
+
+<div class="ui section divider"></div>
+
+<div class="ui text container">
+
+  <h2 class="ui header">Estimation of Exchange </h2>
+
+  <h4 class="ui top attached block header">
+    Select up to 10 CryptoCurrencies and Currencies
+  </h4>
+  <div class="ui bottom attached segment">
+    <form class="ui two column grid" method="POST" action="{{route('consult')}}">
+        <div class="ui column">
+            <select  multiple="" class="ui fluid search dropdown" >
+                @foreach($coins as $coin)
+                <option value="{{$coin->Symbol}}"> {{$coin->FullName}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="ui column">
+            <select  multiple="" class="ui fluid search dropdown" >
+                @foreach($currency as $key=>$curr)
+                <option value="{{$key}}"> {{$curr}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="ui column">
+        </div>
+        <div class="ui column">
+            <button class="ui right floated button blue">SEND</button>
+        </div>
+        
+    <form>
+
+  </div>
+
+
+</div>
+
+<br><br><br>
+
+</body>
+
 </html>
