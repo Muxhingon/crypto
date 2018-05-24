@@ -61,15 +61,16 @@
   </h4>
   <div class="ui bottom attached segment">
     <form class="ui two column grid" method="POST" action="{{route('consult')}}">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="ui column">
-            <select  multiple="" class="ui fluid search dropdown" >
+            <select name="crypto[]" multiple="" class="ui fluid search dropdown" >
                 @foreach($coins as $coin)
                 <option value="{{$coin->Symbol}}"> {{$coin->FullName}}</option>
                 @endforeach
             </select>
         </div>
         <div class="ui column">
-            <select  multiple="" class="ui fluid search dropdown" >
+            <select name="currencies[]"  multiple="" class="ui fluid search dropdown" >
                 @foreach($currency as $key=>$curr)
                 <option value="{{$key}}"> {{$curr}}</option>
                 @endforeach

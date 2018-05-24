@@ -29,7 +29,24 @@ class CryptoController extends Controller
         dd($response);
     }
 
-    public function getExchange(){
+    public function getExchange(Request $request){
+        $baseUrl="https://min-api.cryptocompare.com/data/pricemultifull?";
+        $fsyms="fsyms=";
+        $tsyms="&tsyms=";
+        foreach($request->crypto as $cryp){
+            $fsyms.=$cryp.",";
+        }
+
+        foreach($request->currencies as $curr){
+            $tsyms.=$curr.",";
+        }
+        $baseUrl.=$fsyms;
+        $baseUrl.=$tsyms;
+        $response = file_get_contents($baseUrl);
+        $response = json_decode($response);
+
+        return view('consult')->with('exchanges',$response->DISPLAY);
+        dd($response);
         
     }
 }
