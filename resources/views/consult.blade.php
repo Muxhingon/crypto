@@ -23,13 +23,14 @@
 <body>
 <br>
 
-<div class="ui container">
-  <h2 class="ui header">Crypto Exchanges</h2>
+<div class="ui">
+  @foreach($amounts as $amount)
+    <h2 class="ui header">Crypto Exchanges for {{$amount}}</h2>
     <div class="ui two column grid">
       @foreach($exchanges as $key => $exchange)
       <div class="ui column">
         <h4 class="ui top attached block header">
-         {{ $key}}
+         {{ $key }}
         </h4>
         <div class="ui bottom attached segment">
         <table class="ui definition table">
@@ -37,6 +38,7 @@
             <tr>
               <th></th>
               <th>Price</th>
+              <th>Total to buy </th>
               <th>High last 24H</th>
               <th>Low last 24H</th>
           </thead>
@@ -45,6 +47,7 @@
               <tr>
                 <td>{{$k}}</td>
                 <td>{{$val->PRICE}}</td>
+                <td>{{$amount/$val->PRICE}}</td>
                 <td>{{$val->HIGH24HOUR}}</td>
                 <td>{{$val->LOW24HOUR}}</td>
               </tr>
@@ -55,6 +58,7 @@
       </div>
       @endforeach
     </div>
+  @endforeach
     <br>
     <a class="ui  green button" href="/">Back</a>
 </div>
