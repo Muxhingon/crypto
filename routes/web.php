@@ -11,6 +11,5 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','CryptoController@home');
+Route::get('/prueba','CryptoController@getTop');
