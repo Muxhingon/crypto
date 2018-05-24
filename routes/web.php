@@ -14,4 +14,5 @@
 Route::get('/','CryptoController@home');
 Route::get('/prueba','CryptoController@getTop');
 
-Route::post('/prueba','CryptoController@getExchange')->name('consult');
+
+Route::post('/consult','CryptoController@getExchange')->name('consult');

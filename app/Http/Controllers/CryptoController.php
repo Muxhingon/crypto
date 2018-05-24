@@ -44,6 +44,8 @@ class CryptoController extends Controller
         $baseUrl.=$tsyms;
         $response = file_get_contents($baseUrl);
         $response = json_decode($response);
+
+        return view('consult')->with('exchanges',$response);
         dd($response);
         
     }
