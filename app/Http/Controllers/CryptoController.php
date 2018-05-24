@@ -30,7 +30,7 @@ class CryptoController extends Controller
     }
 
     public function getExchange(Request $request){
-        $baseUrl="https://min-api.cryptocompare.com/data/pricemulti?";
+        $baseUrl="https://min-api.cryptocompare.com/data/pricemultifull?";
         $fsyms="fsyms=";
         $tsyms="&tsyms=";
         foreach($request->crypto as $cryp){
@@ -45,7 +45,7 @@ class CryptoController extends Controller
         $response = file_get_contents($baseUrl);
         $response = json_decode($response);
 
-        return view('consult')->with('exchanges',$response);
+        return view('consult')->with('exchanges',$response->DISPLAY);
         dd($response);
         
     }
