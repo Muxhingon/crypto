@@ -16,6 +16,29 @@
   <script>
     $(document).ready(function(){
         $('.ui.dropdown').dropdown({maxSelections:10});
+
+        $('form').form({
+                on: 'blur',
+                fields: {
+                    amounts: {
+                        rules: [
+                        {
+                            type   : 'empty',
+                            prompt : 'Please enter a value'
+                        }
+                        ]
+                    },
+                    dropdown: {
+                        identifier  : 'dropdown',
+                        rules: [
+                        {
+                            type   : 'empty',
+                            prompt : 'Please select a dropdown value'
+                        }
+                        ]
+                    },
+                }
+        });
     });
   </script>
 
@@ -23,7 +46,66 @@
 <body>
 <br>
 
+<div class="ui text container">
+
+<h2 class="ui header">Estimation of Exchange </h2>
+
+<h4 class="ui top attached block header">
+  Select up to 10 CryptoCurrencies and Currencies
+</h4>
+<div class="ui bottom attached segment">
+  <form class="ui two column grid" method="POST" action="{{route('consult')}}">
+      <input type="hidden" name="_token" value="{{ csrf_token() }}">
+      <div class="ui column">Please insert the Amount to calculate</div>
+      <div class="ui column input">
+          <input type="text" name="amounts" placeholder="10000,5000,6000"/>
+      </div>
+      <div class="ui column">
+          <select name="crypto[]" multiple="" class="ui fluid search dropdown" >
+              @foreach($coins as $coin)
+              <option value="{{$coin->Symbol}}"> {{$coin->FullName}}</option>
+              @endforeach
+          </select>
+      </div>
+      <div class="ui column">
+          <select name="currencies[]"  multiple="" class="ui fluid search dropdown" >
+              @foreach($currency as $key=>$curr)
+              <option value="{{$key}}"> {{$curr}}</option>
+              @endforeach
+          </select>
+      </div>
+      <div class="ui column">
+      </div>
+      <div class="ui column">
+          <button class="ui right floated button blue">SEND</button>
+      </div>
+      
+  <form>
+
+</div>
+
+
+
+</div>
+
+
+
+
 <div class="ui container">
+
+  @if ($errors->any())
+  <div class="ui error message"></div>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
+<div class="ui section divider"></div>
+
   <h2 class="ui header">Top crypto currencies converted to MXN</h2>
     <div class="ui five column grid">
         @foreach($top->Data as $t)
@@ -50,44 +132,8 @@
     </div>
 </div>
 
-<div class="ui section divider"></div>
-
-<div class="ui text container">
-
-  <h2 class="ui header">Estimation of Exchange </h2>
-
-  <h4 class="ui top attached block header">
-    Select up to 10 CryptoCurrencies and Currencies
-  </h4>
-  <div class="ui bottom attached segment">
-    <form class="ui two column grid" method="POST" action="{{route('consult')}}">
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        <div class="ui column">
-            <select name="crypto[]" multiple="" class="ui fluid search dropdown" >
-                @foreach($coins as $coin)
-                <option value="{{$coin->Symbol}}"> {{$coin->FullName}}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="ui column">
-            <select name="currencies[]"  multiple="" class="ui fluid search dropdown" >
-                @foreach($currency as $key=>$curr)
-                <option value="{{$key}}"> {{$curr}}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="ui column">
-        </div>
-        <div class="ui column">
-            <button class="ui right floated button blue">SEND</button>
-        </div>
-        
-    <form>
-
-  </div>
 
 
-</div>
 
 <br><br><br>
 
