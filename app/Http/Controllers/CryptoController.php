@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Validator;
 
+use Illuminate\Http\Request;
+use App\Http\Requests\CryptoRequest;
 class CryptoController extends Controller
 {
     //
 
     public function home(){
-        $top = file_get_contents('https://min-api.cryptocompare.com/data/top/totalvol?limit=12&tsym=MXN');
+        $top = file_get_contents('https://min-api.cryptocompare.com/data/top/totalvol?limit=5&tsym=MXN');
         $top = json_decode($top);
 
         $data = file_get_contents('https://min-api.cryptocompare.com/data/all/coinlist');
@@ -29,7 +31,9 @@ class CryptoController extends Controller
         dd($response);
     }
 
+ 
     public function getExchange(Request $request){
+        $amounts = explode(",",$request->amounts);
         $baseUrl="https://min-api.cryptocompare.com/data/pricemultifull?";
         $fsyms="fsyms=";
         $tsyms="&tsyms=";
@@ -45,7 +49,8 @@ class CryptoController extends Controller
         $response = file_get_contents($baseUrl);
         $response = json_decode($response);
 
-        return view('consult')->with('exchanges',$response->DISPLAY);
+        return view('consult')->with('exchanges',$response->RAW)
+                             ->with('amounts',$amounts);
         dd($response);
         
     }
